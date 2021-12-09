@@ -39,18 +39,26 @@ class SLIC(object):
         :param real_or_fake: 是真还是假
         :return:
         """
-        file_count = len(list_name)  # 文件数
-        switch_count = math.ceil(self.validation_split * file_count)  # 分割训练集和验证集
+        file_count = len(list_name)  # 文件数  29
+        switch_count = math.ceil(self.validation_split * file_count)  # 分割训练集和验证集  24
         path_train = Config.path(Config.slic_result_path, self.K, Config.name_train, real_or_fake)
         path_validation = Config.path(Config.slic_result_path, self.K, Config.name_validation, real_or_fake)
         # 训练集
-        for i in tqdm(range(switch_count)):
+        start_train_count = 0
+        start_validation_count = 0
+        train_processed_list = Config.get_image_file_list(path_train)
+        if len(train_processed_list) != 0:
+            start_train_count = int(train_processed_list[-1].split('_')[0])
+        validation_processed_child_folder_list = Config.get_child_folder(path_validation)
+        if len(validation_processed_child_folder_list) != 0:
+            start_validation_count = validation_processed_child_folder_list[-1].split('/')[-2]
+        for i in tqdm(range(start_train_count, switch_count)):
             Debug.info("正在处理slic")
             arr = self.process_inner(list_name[i], self.K, self.M)
             Debug.info('正在处理split')
             Split(arr, list_name[i]).traversal(i, path_train, False)
         # 验证集
-        for i in tqdm(range(file_count - switch_count + 1)):
+        for i in tqdm(range(start_validation_count, file_count - switch_count)):
             arr = self.process_inner(list_name[i + switch_count], self.K, self.M)
             Split(arr, list_name[i + switch_count]).traversal(i, path_validation, True)
 

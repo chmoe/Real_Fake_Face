@@ -35,7 +35,11 @@ class Config(object):
 
     @staticmethod
     def get_image_file_list(path):
-        image_filenames = [os.path.join(path, x) for x in os.listdir(path) if Config.is_image_file(x)]
+        all_file = os.listdir(path)
+        if '.DS_Store' in all_file:
+            all_file.remove('.DS_Store')
+        all_file.sort(key=lambda x: int(x[:-4]))
+        image_filenames = [os.path.join(path, x) for x in all_file if Config.is_image_file(x)]
         return image_filenames
 
     @staticmethod
@@ -59,4 +63,6 @@ class Config(object):
         :param path_: 输入的路径
         :return: 返回路径的list
         """
-        return [Config.path(path_, i) for i in os.listdir(path_) if not i.startswith('.')]
+        tmp_list = [Config.path(path_, i) for i in os.listdir(path_) if not i.startswith('.')]
+        tmp_list.sort()
+        return tmp_list
