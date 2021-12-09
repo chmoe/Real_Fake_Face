@@ -26,7 +26,7 @@ class Main(object):
 
     def loop(self):
         for i in range(20, 65):
-            SLIC(k=i, m=10, validation_split=self.validation_split).process()
+            SLIC(k=i, m=self.m, validation_split=self.validation_split).process()
             net_run(i)
 
 

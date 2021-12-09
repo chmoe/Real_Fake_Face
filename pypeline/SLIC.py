@@ -30,8 +30,7 @@ class SLIC(object):
     def process_inner(img, segment, compactness):
         rgb = io.imread(img)
         segments = slic(rgb, n_segments=segment, compactness=compactness, )
-        superpixels = color.label2rgb(segments, rgb, kind='avg')
-        return superpixels
+        return segments
 
     def run(self, list_name: str, real_or_fake: str):
         """
@@ -46,7 +45,9 @@ class SLIC(object):
         path_validation = Config.path(Config.slic_result_path, self.K, Config.name_validation, real_or_fake)
         # 训练集
         for i in tqdm(range(switch_count)):
+            Debug.info("正在处理slic")
             arr = self.process_inner(list_name[i], self.K, self.M)
+            Debug.info('正在处理split')
             Split(arr, list_name[i]).traversal(i, path_train, False)
         # 验证集
         for i in tqdm(range(file_count - switch_count + 1)):
