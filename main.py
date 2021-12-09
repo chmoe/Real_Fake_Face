@@ -14,9 +14,9 @@ sys.path.append('./pypeline/')
 
 
 def net_run(i_control: int):
-    Net(k=i_control, frozen_layer=Config.frozen_layer_vgg16, net_name=Config.name_vgg16)
-    Net(k=i_control, frozen_layer=Config.frozen_layer_resnet, net_name=Config.name_resnet)
-    Net(k=i_control, frozen_layer=Config.frozen_layer_xception, net_name=Config.name_xception)
+    Net(k=i_control, frozen_layer=Config.frozen_layer_vgg16, net_name=Config.name_vgg16).run()
+    Net(k=i_control, frozen_layer=Config.frozen_layer_resnet, net_name=Config.name_resnet).run()
+    Net(k=i_control, frozen_layer=Config.frozen_layer_xception, net_name=Config.name_xception).run()
 
 
 class Main(object):

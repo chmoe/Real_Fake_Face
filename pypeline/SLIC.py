@@ -51,7 +51,7 @@ class SLIC(object):
             start_train_count = int(train_processed_list[-1].split('/')[-1].split('_')[0])
         validation_processed_child_folder_list = Config.get_child_folder(Config.path_exist(path_validation))
         if len(validation_processed_child_folder_list) != 0:
-            start_validation_count = validation_processed_child_folder_list[-1].split('/')[-2]
+            start_validation_count = int(validation_processed_child_folder_list[-1].split('/')[-2])
         for i in tqdm(range(start_train_count, switch_count)):
             Debug.info("正在处理slic")
             arr = self.process_inner(list_name[i], self.K, self.M)
