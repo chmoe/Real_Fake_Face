@@ -46,10 +46,10 @@ class SLIC(object):
         # 训练集
         start_train_count = 0
         start_validation_count = 0
-        train_processed_list = Config.get_image_file_list(path_train)
+        train_processed_list = Config.get_image_file_list(Config.path_exist(path_train))
         if len(train_processed_list) != 0:
-            start_train_count = int(train_processed_list[-1].split('_')[0])
-        validation_processed_child_folder_list = Config.get_child_folder(path_validation)
+            start_train_count = int(train_processed_list[-1].split('/')[-1].split('_')[0])
+        validation_processed_child_folder_list = Config.get_child_folder(Config.path_exist(path_validation))
         if len(validation_processed_child_folder_list) != 0:
             start_validation_count = validation_processed_child_folder_list[-1].split('/')[-2]
         for i in tqdm(range(start_train_count, switch_count)):
