@@ -18,7 +18,7 @@ class Validation(tf.keras.callbacks.Callback):
         self.val_loss = None
         self.val_acc = None
         self.generator = validation_gen
-        self.label = label
+        self.label = label  # {'fake': 0, 'real': 1}
 
     def on_train_begin(self, logs=None):
         self.val_acc = []
@@ -31,7 +31,8 @@ class Validation(tf.keras.callbacks.Callback):
         :param img_ndarry: 一组图片的数组
         :return:
         """
-        tmp_list = {self.label[Config.name_fake]:0, self.label[Config.name_real]:0}  # 暂时存放每张图片预测的真伪
+        print("calc的label", self.label)
+        tmp_list = {self.label[Config.name_fake]: 0, self.label[Config.name_real]: 0}  # 暂时存放每张图片预测的真伪
         for img in img_ndarry:
             tmp_list[self.model.predict(img)] += 1
         if tmp_list[self.label[Config.name_fake]] > tmp_list[self.label[Config.name_real]]:

@@ -66,7 +66,7 @@ class Net(object):
             target_size=target_size,
             batch_size=batch_size,
             class_mode='binary')
-        self.label = train_generator.class_indices
+        self.label = train_generator.class_indices  # {'fake': 0, 'real': 1}
         return train_generator
 
     def generate_validation(self, batch_size: int = 32, target_size: (int, int) = (256, 256)):
@@ -120,12 +120,13 @@ class Net(object):
             factor=0.2,
             patience=10,
         )
+        print("validation外的label", self.label)
         validation = Validation(
-                    self.generate_validation(
+                    validation_gen=self.generate_validation(
                         batch_size=self.batch_size,
                         target_size=(self.image_width, self.image_height)
                     ),
-                    self.label
+                    label=self.label  # {'fake': 0, 'real': 1}
                 )
         initial_epoch = 0
         if os.path.exists(check):
@@ -133,7 +134,7 @@ class Net(object):
             if latest:
                 model.load_weights(latest)
                 tmp_len = len(check) + 4  # 路径长度
-                initial_epoch = int(latest[tmp_len:tmp_len + 4])
+                initial_epoch = int(latest[tmp_len:tmp_len + 4]) - 1
         model.fit_generator(
             generator=self.generate_train(
                 batch_size=self.batch_size,
