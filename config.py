@@ -65,5 +65,5 @@ class Config(object):
         :return: 返回路径的list
         """
         tmp_list = [Config.path(path_, i) for i in os.listdir(path_) if not i.startswith('.')]
-        tmp_list.sort()
+        tmp_list.sort(key=lambda x: int(x.split('/')[-2]))
         return tmp_list

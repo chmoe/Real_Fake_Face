@@ -8,6 +8,7 @@ import copy
 import numpy
 import tensorflow as tf
 from config import Config
+from Debug import Debug
 
 
 class Validation(tf.keras.callbacks.Callback):
@@ -44,12 +45,15 @@ class Validation(tf.keras.callbacks.Callback):
         count = 0
         right = 0
         value = next(self.generator)
-
+        Debug.info('调用on_epoch_end')
+        print(value)
         while value[2]:  # 没有完成一个循环
+            Debug.info('进入循环')
             for i in range(value[0]):
                 if self.calc(value[0][i]) == value[1][i]:
                     right += 1
                 count += 1
+                Debug.info('加一')
             value = next(self.generator)
         val_acc = right / count
         self.val_acc.append(val_acc)
