@@ -34,11 +34,12 @@ class Config(object):
         return any(filename.endswith(extension) for extension in ['.png', '.jpg', '.jpeg', '.PNG', '.JPG', '.JPEG'])
 
     @staticmethod
-    def get_image_file_list(path):
-        all_file = os.listdir(path)
-        if '.DS_Store' in all_file:
-            all_file.remove('.DS_Store')
-        all_file.sort(key=lambda x: int(x[:-4]))
+    def get_image_file_list(path, is_train_data: bool = False):
+        all_file = [i for i in os.listdir(path) if not i.startswith('.')]
+        if not is_train_data:
+            all_file.sort(key=lambda x: int(x[:-4]))  # 4代表去掉'.jpg'之类的后缀名
+        else:
+            all_file.sort(key=lambda x: (int(x.split('_')[0]), int(x.split('_')[1][:-4])))
         image_filenames = [os.path.join(path, x) for x in all_file if Config.is_image_file(x)]
         return image_filenames
 

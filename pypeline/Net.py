@@ -108,7 +108,7 @@ class Net(object):
 
         cp_callback = ModelCheckpoint(
             filepath=checkpoint_path,
-            monitor='acc',
+            monitor='accuracy',
             save_best_only=True,
             model='auto',
             save_weights_only=True,
@@ -119,7 +119,7 @@ class Net(object):
             factor=0.2,
             patience=10,
         )
-        validation = Validation.Validation(
+        validation = Validation(
                     self.generate_validation(
                         batch_size=self.batch_size,
                         target_size=(self.image_width, self.image_height)

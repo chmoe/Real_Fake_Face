@@ -13,7 +13,11 @@ class Debug(object):
         print('[' + info_type + ']' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + info_str)
 
     @staticmethod
-    def info(info_str):
-        Debug.default('info', info_str)
+    def info(*info_str):
+        tmp_str = ''
+        for i in info_str:
+            tmp_str += str(i)
+            tmp_str += ', '
+        Debug.default('info', tmp_str)
 
 

@@ -66,5 +66,5 @@ class Split(object):
                 else:
                     data_copy[row][col] = (0, 0, 0)
 
-        io.imsave(path, data_copy)
+        io.imsave(path, data_copy, check_contrast=False)
 

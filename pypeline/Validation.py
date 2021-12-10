@@ -43,11 +43,14 @@ class Validation(tf.keras.callbacks.Callback):
     def on_epoch_end(self, epoch, logs=None):
         count = 0
         right = 0
-        while self.generator[2]:  # 没有完成一个循环
-            for i in range(self.generator[0]):
-                if self.calc(self.generator[0][i]) == self.generator[1][i]:
+        value = next(self.generator)
+
+        while value[2]:  # 没有完成一个循环
+            for i in range(value[0]):
+                if self.calc(value[0][i]) == value[1][i]:
                     right += 1
                 count += 1
+            value = next(self.generator)
         val_acc = right / count
         self.val_acc.append(val_acc)
 
