@@ -5,7 +5,7 @@
 # @Date: 2021/12/06 18:40
 import copy
 
-import numpy
+import numpy as np
 import tensorflow as tf
 from config import Config
 from Debug import Debug
@@ -25,7 +25,7 @@ class Validation(tf.keras.callbacks.Callback):
         self.val_loss = []
         return
 
-    def calc(self, img_ndarry: numpy.ndarray) -> int:
+    def calc(self, img_ndarry: np.ndarray) -> int:
         """
         根据给定的一组图片计算综合的真伪（多数決）
         :param img_ndarry: 一组图片的数组
@@ -41,7 +41,7 @@ class Validation(tf.keras.callbacks.Callback):
             finally:
                 pass
 
-            tmp_list[self.model.predict(img)] += 1
+            tmp_list[self.model.predict(np.array([img]))] += 1
         if tmp_list[self.label[Config.name_fake]] > tmp_list[self.label[Config.name_real]]:
             return self.label[Config.name_fake]
         elif tmp_list[self.label[Config.name_fake]] < tmp_list[self.label[Config.name_real]]:
