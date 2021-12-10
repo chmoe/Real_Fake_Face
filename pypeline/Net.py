@@ -91,6 +91,7 @@ class Net(object):
                         path=pic,
                         target_size=target_size
                     ))
+                x_list.append(tmp_list)
                 y_list.append(self.label[Config.name_real] if i < boundary else self.label[Config.name_fake])
 
             steps += batch_size

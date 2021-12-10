@@ -49,7 +49,7 @@ class Validation(tf.keras.callbacks.Callback):
         print(value)
         while not value[2]:  # 没有完成一个循环
             # Debug.info('进入循环')
-            for i in range(value[0]):
+            for i in range(len(value[0])):
                 if self.calc(value[0][i]) == value[1][i]:
                     right += 1
                 count += 1
