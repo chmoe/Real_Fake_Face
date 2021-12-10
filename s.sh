@@ -1,0 +1,1 @@
+git pull && nohup python main.py > main.log 2>&1 && tail -f main.log
