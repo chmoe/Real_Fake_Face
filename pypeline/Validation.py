@@ -36,12 +36,15 @@ class Validation(tf.keras.callbacks.Callback):
         for img in img_ndarry:
             print(type(img))
             print(img)
+            print(self.model.summary())
+            dealed_img = np.array([img])
+            print(dealed_img)
+            print('dealed_img.shape', dealed_img.shape)
             try:
-                print(self.model.summary())
-            finally:
-                pass
-
-            tmp_list[self.model.predict(np.array([img]))] += 1
+                predict_result = self.model.predict(dealed_img)
+                tmp_list[predict_result] += 1
+            except Exception as e:
+                print('predict:', e)
         if tmp_list[self.label[Config.name_fake]] > tmp_list[self.label[Config.name_real]]:
             return self.label[Config.name_fake]
         elif tmp_list[self.label[Config.name_fake]] < tmp_list[self.label[Config.name_real]]:
