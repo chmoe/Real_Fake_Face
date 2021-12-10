@@ -34,6 +34,13 @@ class Validation(tf.keras.callbacks.Callback):
         # print("calc的label", self.label)
         tmp_list = {self.label[Config.name_fake]: 0, self.label[Config.name_real]: 0}  # 暂时存放每张图片预测的真伪
         for img in img_ndarry:
+            print(type(img))
+            print(img)
+            try:
+                print(self.model.summary())
+            finally:
+                pass
+
             tmp_list[self.model.predict(img)] += 1
         if tmp_list[self.label[Config.name_fake]] > tmp_list[self.label[Config.name_real]]:
             return self.label[Config.name_fake]
@@ -47,7 +54,7 @@ class Validation(tf.keras.callbacks.Callback):
         right = 0
         value = next(self.generator)
         # Debug.info('调用on_epoch_end')
-        print(value)
+        # print(value)
         while not value[2]:  # 没有完成一个循环
             # Debug.info('进入循环')
             for i in range(len(value[0])):
@@ -66,4 +73,3 @@ class Validation(tf.keras.callbacks.Callback):
         history['val_acc'] = self.val_acc
         history['val_loss'] = self.val_loss
         return
-

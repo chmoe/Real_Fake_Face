@@ -57,10 +57,9 @@ class Net(object):
         return model
 
     def generate_train(self, batch_size: int = 32, target_size: (int, int) = (256, 256)):
-        from tensorflow.keras.preprocessing.image import ImageDataGenerator
         head_data_path = Config.path(Config.slic_result_path, self.K, Config.name_train)
 
-        train_datagen = ImageDataGenerator(rescale=1.0 / 255, shear_range=0.2, zoom_range=0.2, horizontal_flip=True)
+        train_datagen = image.ImageDataGenerator(rescale=1.0 / 255, shear_range=0.2, zoom_range=0.2, horizontal_flip=True)
         train_generator = train_datagen.flow_from_directory(
             head_data_path,
             target_size=target_size,
@@ -73,32 +72,32 @@ class Net(object):
         head_data_path = Config.path(Config.slic_result_path, self.K, Config.name_validation)
         real_path = Config.path(head_data_path, Config.name_real)
         fake_path = Config.path(head_data_path, Config.name_fake)
-        real_list = Config.get_child_folder(real_path)
+        real_list = Config.get_child_folder(real_path)  # 存储真图片的文件夹 每张图片一个文件夹
         fake_list = Config.get_child_folder(fake_path)
-        image_list = real_list + fake_list
+        image_list = real_list + fake_list  # 所有图片的子文件夹
         boundary = len(real_list)
         max_len = len(image_list)
 
         steps = 0
         finish_flag = False
         while True:
-            x_list = []
+            x_list = []  # 存储图片的数组，每次返回后清零 （len/batch, 20, 300, 300, 3）
             y_list = []
             for i in range(steps, min(steps + batch_size, max_len)):
-                tmp_list = []
-                for pic in Config.get_image_file_list(image_list[i]):
+                tmp_list = []  # （20, 300, 300, 3)
+                for pic in Config.get_image_file_list(image_list[i]):  # 遍历每一个子文件夹（20）
                     tmp_list.append(image.load_img(
                         path=pic,
                         target_size=target_size
                     ))
-                x_list.append(tmp_list)
-                y_list.append(self.label[Config.name_real] if i < boundary else self.label[Config.name_fake])
+                x_list.append(tmp_list)  # （20, 300, 300, 3)
+                y_list.append(self.label[Config.name_real] if i < boundary else self.label[Config.name_fake])  # 1
 
             steps += batch_size
             if steps >= max_len:
                 steps = 0
                 finish_flag = True
-
+            # (n, 20, 300, 300, 3)  (n, 1)
             yield np.array(x_list), np.array(y_list), finish_flag
             finish_flag = False
 
