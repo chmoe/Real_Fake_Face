@@ -20,9 +20,7 @@ class VGG(object):
     def model(self) -> tf.keras.models.Model:
         input_tensor = Input(shape=self.shape)
         vgg16_model = VGG16(include_top=False, weights='imagenet', input_tensor=input_tensor)
-        vgg16_model.summary()
-        # %%
-        # 构建全连接层
+
         top_model = Sequential()
         top_model.add(Flatten(input_shape=vgg16_model.output_shape[1:]))
         top_model.add(Dense(256, activation='relu'))
