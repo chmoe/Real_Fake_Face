@@ -18,10 +18,10 @@ class Config(object):
     frozen_layer_resnet = 100
     frozen_layer_xception = 101
     original_face_path = './result/'  # 人脸区域原始图像
-    slic_result_path = './SLIC_result/'  # 超像素处理后的位置
-    checkpoint_path = './checkpoint/'  # 检查点的公共文件夹
-    model_path = './models/'  # 存放模型的公共文件夹
-    history_path = './history/'  # 存放历史记录的公共文件夹
+    slic_result_path = '../SLIC_result/'  # 超像素处理后的位置
+    checkpoint_path = '../checkpoint/'  # 检查点的公共文件夹
+    model_path = '../models/'  # 存放模型的公共文件夹
+    history_path = '../history/'  # 存放历史记录的公共文件夹
 
     @staticmethod
     def path_exist(path):
