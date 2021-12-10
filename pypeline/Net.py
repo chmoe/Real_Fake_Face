@@ -13,7 +13,7 @@ from tensorflow.keras.models import Model
 import tensorflow as tf
 from config import Config
 import sys
-sys.path.append('./')
+sys.path.append('/')
 from pypeline.Validation import Validation
 from pypeline.VGG import VGG
 from pypeline.XCeption import XCeption
@@ -120,7 +120,10 @@ class Net(object):
             factor=0.2,
             patience=10,
         )
-        print("validation外的label", self.label)
+        train = self.generate_train(
+                batch_size=self.batch_size,
+                target_size=(self.image_width, self.image_height)
+            )
         validation = Validation(
                     validation_gen=self.generate_validation(
                         batch_size=self.batch_size,
@@ -136,10 +139,7 @@ class Net(object):
                 tmp_len = len(check) + 4  # 路径长度
                 initial_epoch = int(latest[tmp_len:tmp_len + 4]) - 1
         model.fit_generator(
-            generator=self.generate_train(
-                batch_size=self.batch_size,
-                target_size=(self.image_width, self.image_height)
-            ),
+            generator=train,
             epochs=self.nb_epoch,
             # steps_per_epoch=nb_train_samples,
             # validation_data=validation_generator,

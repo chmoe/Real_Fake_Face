@@ -31,7 +31,7 @@ class Validation(tf.keras.callbacks.Callback):
         :param img_ndarry: 一组图片的数组
         :return:
         """
-        print("calc的label", self.label)
+        # print("calc的label", self.label)
         tmp_list = {self.label[Config.name_fake]: 0, self.label[Config.name_real]: 0}  # 暂时存放每张图片预测的真伪
         for img in img_ndarry:
             tmp_list[self.model.predict(img)] += 1

@@ -10,7 +10,7 @@ import os
 import sys
 from pypeline import *
 
-sys.path.append('./pypeline/')
+sys.path.append('pypeline/')
 
 
 def net_run(i_control: int):
