@@ -136,7 +136,7 @@ class Net(object):
             latest = tf.train.latest_checkpoint(checkpoint_dir)
             if latest:
                 model.load_weights(latest)
-                tmp_len = len(check) + 4  # 路径长度
+                tmp_len = len(checkpoint_dir) + 4  # 路径长度
                 initial_epoch = int(latest[tmp_len:tmp_len + 4]) - 1
         model.fit_generator(
             generator=train,
