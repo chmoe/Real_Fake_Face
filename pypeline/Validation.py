@@ -33,8 +33,12 @@ class Validation(tf.keras.callbacks.Callback):
         """
         # print("calc的label", self.label)
         tmp_list = {self.label[Config.name_fake]: 0, self.label[Config.name_real]: 0}  # 暂时存放每张图片预测的真伪
-        for img in img_ndarry:
-            tmp_list[int(self.model.predict(np.array([np.array(img)])))] += 1
+        predict_result = self.model.predict(img_ndarry)
+        for i in predict_result:
+            if int(i) == self.label[Config.name_fake]:
+                tmp_list[self.label[Config.name_fake]] += 1
+            else:
+                tmp_list[self.label[Config.name_real]] += 1
         if tmp_list[self.label[Config.name_fake]] > tmp_list[self.label[Config.name_real]]:
             return self.label[Config.name_fake]
         elif tmp_list[self.label[Config.name_fake]] < tmp_list[self.label[Config.name_real]]:

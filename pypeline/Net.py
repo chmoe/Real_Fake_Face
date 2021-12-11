@@ -153,8 +153,8 @@ class Net(object):
         return model
 
     def save(self, model: tf.keras.models.Model):
-        model.save_weights(Config.path_exist(Config.path(Config.model_path, self.net_name + '_fine-tuning.h5')))
-        self.save_history(model.history, Config.path_exist(Config.path(Config.history_path, self.net_name + '_history.txt')))
+        model.save_weights(Config.path_exist(Config.model_path) + '{}_{}_fine-tuning.h5'.format(self.K, self.net_name))
+        self.save_history(model.history, Config.path_exist(Config.history_path) + '{}_{}_history.txt'.format(self.K, self.net_name))
 
     def run(self):
         Debug.info("Net_Processing: {} net is running with {} slices".format(self.net_name, self.K))
