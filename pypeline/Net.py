@@ -36,14 +36,15 @@ class Net(object):
     def save_history(history, result_file):
         loss = history.history['loss']
         acc = history.history['accuracy']
-        val_loss = history.history['val_loss']
+        # val_loss = history.history['val_loss']
         val_acc = history.history['val_accuracy']
         nb_epoch = len(acc)
 
         with open(result_file, "w") as fp:
             fp.write("epoch\tloss\tacc\tval_loss\tval_acc\n")
             for i in range(nb_epoch):
-                fp.write("%d\t%f\t%f\t%f\t%f\n" % (i, loss[min(i, len(loss) - 1)], acc[min(i, len(acc) - 1)], val_loss[min(i, len(val_loss) - 1)], val_acc[min(i, len(val_acc) - 1)]))
+                # fp.write("%d\t%f\t%f\t%f\t%f\n" % (i, loss[min(i, len(loss) - 1)], acc[min(i, len(acc) - 1)], val_loss[min(i, len(val_loss) - 1)], val_acc[min(i, len(val_acc) - 1)]))
+                fp.write("%d\t%f\t%f\t%f\n" % (i, loss[min(i, len(loss) - 1)], acc[min(i, len(acc) - 1)], val_acc[min(i, len(val_acc) - 1)]))
 
     def create_model(self) -> tf.keras.models.Model:
         shape = (self.image_width, self.image_height, 3)
