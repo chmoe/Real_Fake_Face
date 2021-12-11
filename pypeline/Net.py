@@ -86,11 +86,11 @@ class Net(object):
             for i in range(steps, min(steps + batch_size, max_len)):
                 tmp_list = []  # （20, 300, 300, 3)
                 for pic in Config.get_image_file_list(image_list[i]):  # 遍历每一个子文件夹（20）
-                    tmp_list.append(image.load_img(
+                    tmp_list.append(np.array(image.load_img(
                         path=pic,
                         target_size=target_size
-                    ))
-                x_list.append(tmp_list)  # （20, 300, 300, 3)
+                    )))
+                x_list.append(np.array(tmp_list))  # （20, 300, 300, 3)
                 y_list.append(self.label[Config.name_real] if i < boundary else self.label[Config.name_fake])  # 1
 
             steps += batch_size
