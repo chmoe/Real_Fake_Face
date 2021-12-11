@@ -103,7 +103,7 @@ class Net(object):
             finish_flag = False
 
     def fit(self, model: tf.keras.models.Model) -> tf.keras.models.Model:
-        check = Config.path_exist(Config.checkpoint_path + 'resnet').replace('//', '/')
+        check = Config.path_exist(Config.path(Config.checkpoint_path, str(self.K), self.net_name))
         checkpoint_path = check + '/cp-{epoch:04d}.ckpt'
         checkpoint_dir = os.path.dirname(checkpoint_path)
 
