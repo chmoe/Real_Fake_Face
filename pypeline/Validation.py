@@ -63,6 +63,6 @@ class Validation(tf.keras.callbacks.Callback):
 
     def on_train_end(self, logs=None):
         history = self.model.history.history
-        history['val_acc'] = self.val_acc
+        history['val_accuracy'] = self.val_acc
         history['val_loss'] = self.val_loss
         return
