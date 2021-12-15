@@ -25,7 +25,7 @@ class Main(object):
         self.validation_split = 0.8
 
     def loop(self):
-        for i in range(20, 65):
+        for i in range(40, 65):
             SLIC(k=i, m=self.m, validation_split=self.validation_split).process()
             net_run(i)
 
