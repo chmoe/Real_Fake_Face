@@ -46,7 +46,7 @@ class Validation(tf.keras.callbacks.Callback):
             return self.label[Config.name_real]
         else:
             return -1
-    def on_epoch_begin(self, epoch):
+    def on_epoch_begin(self, epoch, logs=None):
         Debug.info("Current: " + self.status)
 
     def on_epoch_end(self, epoch, logs=None):
