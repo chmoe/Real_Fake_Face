@@ -116,9 +116,9 @@ class Net(object):
             save_freq=1
         )
         reduce_lr = ReduceLROnPlateau(
-            monitor='val_loss',
-            factor=0.2,
-            patience=10,
+            monitor='accuracy',
+            factor=0.1,
+            patience=2,
         )
         train = self.generate_train(
                 batch_size=self.batch_size,
