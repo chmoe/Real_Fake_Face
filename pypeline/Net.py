@@ -159,6 +159,9 @@ class Net(object):
         self.save_history(model.history, Config.path_exist(Config.history_path) + '{}_{}_history.txt'.format(self.K, self.net_name))
 
     def run(self):
-        Debug.info("Net_Processing: {} net is running with {} slices".format(self.net_name, self.K))
-        model = self.create_model()
-        self.save(self.fit(model))
+        if not os.path.isfile(Config.path_exist(Config.model_path) + '{}_{}_fine-tuning.h5'.format(self.K, self.net_name)):
+            Debug.info("Net_Processing: {} net is running with {} slices".format(self.net_name, self.K))
+            model = self.create_model()
+            self.save(self.fit(model))
+        else:
+            Debug.info('{} net exists, skipping...'.format(self.net_name))
