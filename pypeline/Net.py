@@ -129,7 +129,8 @@ class Net(object):
                         batch_size=self.batch_size,
                         target_size=(self.image_width, self.image_height)
                     ),
-                    label=self.label  # {'fake': 0, 'real': 1}
+                    label=self.label,  # {'fake': 0, 'real': 1}
+                    status='{} slice with {} Net'.format(self.K, self.net_name)
                 )
         initial_epoch = 0
         if os.path.exists(check):

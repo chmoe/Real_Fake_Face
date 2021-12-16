@@ -13,12 +13,13 @@ from Debug import Debug
 
 class Validation(tf.keras.callbacks.Callback):
 
-    def __init__(self, validation_gen, label: dict):
+    def __init__(self, validation_gen, label: dict, status: str = ""):
         super().__init__()
         self.val_loss = None
         self.val_acc = None
         self.generator = validation_gen
         self.label = label  # {'fake': 0, 'real': 1}
+        self.status = status
 
     def on_train_begin(self, logs=None):
         self.val_acc = []
@@ -45,6 +46,8 @@ class Validation(tf.keras.callbacks.Callback):
             return self.label[Config.name_real]
         else:
             return -1
+    def on_epoch_begin(self, epoch):
+        print("Current: " + self.status)
 
     def on_epoch_end(self, epoch, logs=None):
         count = 0
