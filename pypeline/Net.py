@@ -115,11 +115,11 @@ class Net(object):
             save_weights_only=True,
             save_freq=1
         )
-        # reduce_lr = ReduceLROnPlateau(
-        #     monitor='accuracy',
-        #     factor=0.1,
-        #     patience=2,
-        # )
+        reduce_lr = ReduceLROnPlateau(
+            monitor='accuracy',
+            factor=0.1,
+            patience=2,
+        )
         train = self.generate_train(
                 batch_size=self.batch_size,
                 target_size=(self.image_width, self.image_height)
@@ -147,7 +147,7 @@ class Net(object):
             # validation_steps=nb_validation_samples
             callbacks=[
                 cp_callback,
-                # reduce_lr,
+                reduce_lr,
                 validation
             ],
             initial_epoch=initial_epoch
