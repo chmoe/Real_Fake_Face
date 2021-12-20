@@ -24,8 +24,8 @@ from Debug import Debug
 class Net(object):
     def __init__(self, k: int, frozen_layer: int = Config.frozen_layer_vgg16, net_name: str = Config.name_vgg16):
         self.K = k
-        self.image_width = 150
-        self.image_height = 150
+        self.image_width = 300
+        self.image_height = 300
         self.nb_epoch = 100
         self.batch_size = 32
         self.frozen_layer = frozen_layer
