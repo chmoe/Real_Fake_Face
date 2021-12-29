@@ -11,6 +11,8 @@ import numpy as np
 from tqdm import tqdm
 import os
 
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+
 
 class test(object):
     def __init__(self, k: int, frozen_layer: int = Config.frozen_layer_vgg16, net_name: str = Config.name_vgg16):
