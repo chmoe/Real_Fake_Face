@@ -9,6 +9,7 @@ from pypeline.XCeption import XCeption
 from pypeline.Resnet import Resnet
 import numpy as np
 from tqdm import tqdm
+import os
 
 
 class test(object):
