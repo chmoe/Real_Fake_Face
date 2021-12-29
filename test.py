@@ -18,7 +18,7 @@ class test(object):
     def __init__(self, k: int, frozen_layer: int = Config.frozen_layer_vgg16, net_name: str = Config.name_vgg16):
         self.K = k
         self.net_name = net_name
-        self.label = {'fake': 1, 'real': 0}
+        self.label = {'fake': 0, 'real': 1}
         self.model = None
         self.generator = None
         self.image_width = 300
@@ -84,18 +84,18 @@ class test(object):
                 if value[1][i] == self.label['real']:  # 真实图片
                     predict_result = self.model.predict(value[0][i])
                     for res in predict_result:
-                        print(i, res)
-                        if res == self.label['real']:
+                        # print(i, res)
+                        if res >= 0.5:
                             data['TP'] += 1
-                        elif res == self.label['fake']:
+                        else:
                             data['FP'] += 1
                         data['ALL'] += 1
                 elif value[1][i] == self.label['fake']:  # fake图片
                     predict_result = self.model.predict(value[0][i])
                     for res in predict_result:
-                        if res == self.label['fake']:
+                        if res < 0.5:
                             data['TN'] += 1
-                        elif res == self.label['real']:
+                        else:
                             data['FN'] += 1
                         data['ALL'] += 1
                 # Debug.info('加一')
