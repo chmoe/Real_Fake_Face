@@ -83,8 +83,8 @@ class test(object):
             for i in range(len(value[0])):
                 if value[1][i] == self.label['real']:  # 真实图片
                     predict_result = self.model.predict(value[0][i])
+                    print(i, predict_result)
                     for res in predict_result:
-                        # print(i, res)
                         if res >= 0.5:
                             data['TP'] += 1
                         else:
