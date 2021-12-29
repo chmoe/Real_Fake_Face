@@ -84,6 +84,7 @@ class test(object):
                 if value[1][i] == self.label['real']:  # 真实图片
                     predict_result = self.model.predict(value[0][i])
                     for res in predict_result:
+                        print(i, res)
                         if res == self.label['real']:
                             data['TP'] += 1
                         elif res == self.label['fake']:
