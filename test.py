@@ -8,6 +8,7 @@ from pypeline.VGG import VGG
 from pypeline.XCeption import XCeption
 from pypeline.Resnet import Resnet
 import numpy as np
+from tqdm import tqdm
 
 
 class test(object):
@@ -99,6 +100,7 @@ class test(object):
         return data
 
     def main(self):
+        Debug.info('正在计算{}的内容'.format(self.K))
         self.generator = self.generate_validation(
                         batch_size=self.batch_size,
                         target_size=(self.image_width, self.image_height)
@@ -114,7 +116,7 @@ class test(object):
 
         with open(result_file, "a") as fp:
             fp.write("%d\t%d\t%d\t%d\t%d\t%f\t%f\t%f\n" % (
-                self.k, 
+                self.K, 
                 history['TP'], 
                 history['TN'], 
                 history['FP'], 
@@ -129,5 +131,5 @@ class test(object):
 if __name__ == "__main__":
     Debug.info('今から検証を開始いたします')
     Debug.info('ソラは高性能ですから！')
-    for i in range(43, 49):
+    for i in tqdm(range(43, 49)):
         test(i, frozen_layer=Config.frozen_layer_xception, net_name=Config.name_xception).main()
