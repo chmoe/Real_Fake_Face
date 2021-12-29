@@ -18,7 +18,7 @@ class test(object):
     def __init__(self, k: int, frozen_layer: int = Config.frozen_layer_vgg16, net_name: str = Config.name_vgg16):
         self.K = k
         self.net_name = net_name
-        self.label = {'fake': 0, 'real': 1}
+        self.label = {'fake': 1, 'real': 0}
         self.model = None
         self.generator = None
         self.image_width = 300
@@ -86,15 +86,15 @@ class test(object):
                     for res in predict_result:
                         if res == self.label['real']:
                             data['TP'] += 1
-                        else:
+                        elif res == self.label['fake']:
                             data['FP'] += 1
                         data['ALL'] += 1
-                else:  # fake图片
+                elif value[1][i] == self.label['fake']:  # fake图片
                     predict_result = self.model.predict(value[0][i])
                     for res in predict_result:
                         if res == self.label['fake']:
                             data['TN'] += 1
-                        else:
+                        elif res == self.label['real']:
                             data['FN'] += 1
                         data['ALL'] += 1
                 # Debug.info('加一')
@@ -134,5 +134,13 @@ class test(object):
 if __name__ == "__main__":
     Debug.info('今から検証を開始いたします')
     Debug.info('ソラは高性能ですから！')
-    for i in tqdm(range(43, 49)):
+    for i in tqdm(range(20, 25)):
+        test(i, frozen_layer=Config.frozen_layer_vgg16, net_name=Config.name_vgg16).main()
+        test(i, frozen_layer=Config.frozen_layer_resnet, net_name=Config.name_resnet).main()
+        test(i, frozen_layer=Config.frozen_layer_xception, net_name=Config.name_xception).main()
+    for i in tqdm(range(40, 43)):
+        test(i, frozen_layer=Config.frozen_layer_vgg16, net_name=Config.name_vgg16).main()
+        test(i, frozen_layer=Config.frozen_layer_resnet, net_name=Config.name_resnet).main()
+        test(i, frozen_layer=Config.frozen_layer_xception, net_name=Config.name_xception).main()
+    for i in tqdm(range(43, 52)):
         test(i, frozen_layer=Config.frozen_layer_xception, net_name=Config.name_xception).main()
