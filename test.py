@@ -4,6 +4,9 @@ from tensorflow.keras.models import load_model
 import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import Model
+from pypeline.VGG import VGG
+from pypeline.XCeption import XCeption
+from pypeline.Resnet import Resnet
 
 
 class test(object):
