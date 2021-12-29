@@ -7,6 +7,7 @@ from tensorflow.keras.models import Model
 from pypeline.VGG import VGG
 from pypeline.XCeption import XCeption
 from pypeline.Resnet import Resnet
+import numpy as np
 
 
 class test(object):
