@@ -10,7 +10,7 @@ from pypeline.Resnet import Resnet
 
 
 class test(object):
-    def __init__(self, k: int, net_name: str = Config.name_vgg16):
+    def __init__(self, k: int, frozen_layer: int = Config.frozen_layer_vgg16, net_name: str = Config.name_vgg16):
         self.K = k
         self.net_name = net_name
         self.label = {'fake': 0, 'real': 1}
@@ -19,6 +19,7 @@ class test(object):
         self.image_width = 300
         self.image_height = 300
         self.batch_size = 32
+        self.frozen_layer = frozen_layer
 
     def generate_validation(self, batch_size: int = 32, target_size: (int, int) = (256, 256)):
         head_data_path = Config.path(Config.slic_result_path, self.K, Config.name_validation)
@@ -128,4 +129,4 @@ if __name__ == "__main__":
     Debug.info('今から検証を開始いたします')
     Debug.info('ソラは高性能ですから！')
     for i in range(43, 49):
-        test(i, Config.name_xception).main()
+        test(i, frozen_layer=Config.frozen_layer_xception, net_name=Config.name_xception).main()
