@@ -134,10 +134,10 @@ class test(object):
 if __name__ == "__main__":
     Debug.info('今から検証を開始いたします')
     Debug.info('ソラは高性能ですから！')
-    for i in tqdm(range(20, 25)):
-        test(i, frozen_layer=Config.frozen_layer_vgg16, net_name=Config.name_vgg16).main()
-        test(i, frozen_layer=Config.frozen_layer_resnet, net_name=Config.name_resnet).main()
-        test(i, frozen_layer=Config.frozen_layer_xception, net_name=Config.name_xception).main()
+    # for i in tqdm(range(20, 25)):
+    #     test(i, frozen_layer=Config.frozen_layer_vgg16, net_name=Config.name_vgg16).main()
+    #     test(i, frozen_layer=Config.frozen_layer_resnet, net_name=Config.name_resnet).main()
+    #     test(i, frozen_layer=Config.frozen_layer_xception, net_name=Config.name_xception).main()
     for i in tqdm(range(40, 43)):
         test(i, frozen_layer=Config.frozen_layer_vgg16, net_name=Config.name_vgg16).main()
         test(i, frozen_layer=Config.frozen_layer_resnet, net_name=Config.name_resnet).main()
