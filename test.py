@@ -50,7 +50,7 @@ class test(object):
             finish_flag = False
 
     def get_model(self) -> tf.keras.models.Model:
-        return load_model(Config.path_exist(Config.history_path) + '{}_{}_history.txt'.format(self.K, self.net_name))
+        return load_model(Config.path_exist(Config.model_path) + '{}_{}_fine-tuning.h5'.format(self.K, self.net_name))
 
 
     def calculation(self):
