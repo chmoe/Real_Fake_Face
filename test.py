@@ -50,7 +50,17 @@ class test(object):
             finish_flag = False
 
     def get_model(self) -> tf.keras.models.Model:
-        return load_model(Config.path_exist(Config.model_path) + '{}_{}_fine-tuning.h5'.format(self.K, self.net_name))
+        shape = (self.image_width, self.image_height, 3)
+        model = Model()
+        if Config.name_vgg16 == self.net_name:
+            return VGG(shape=shape, frozen_layer=self.frozen_layer).model()
+        elif Config.name_resnet == self.net_name:
+            return Resnet(shape=shape, frozen_layer=self.frozen_layer).model()
+        elif Config.name_xception == self.net_name:
+            return XCeption(shape=shape, frozen_layer=self.frozen_layer).model()
+        model.load_weights(Config.path_exist(Config.model_path) + '{}_{}_fine-tuning.h5'.format(self.K, self.net_name))
+
+        return model
 
 
     def calculation(self):
