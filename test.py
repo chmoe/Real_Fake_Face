@@ -109,17 +109,17 @@ class test(object):
                         target_size=(self.image_width, self.image_height)
                     )
         data = self.calculation()
-        self.save_history(data, Config.path_exist(Config.history_path) + 'validation_acc(calc).txt')
+        self.save_history(self.K, data, Config.path_exist(Config.history_path) + 'validation_acc(calc).txt')
 
     @staticmethod
-    def save_history(history, result_file):
+    def save_history(k ,history, result_file):
         if not os.path.exists(result_file):
             with open(result_file, 'w+') as fp:
                 fp.write("K\tTP\tTN\tFP\tFN\tAcc\tPre\tRec\n")
 
         with open(result_file, "a") as fp:
             fp.write("%d\t%d\t%d\t%d\t%d\t%f\t%f\t%f\n" % (
-                self.K, 
+                k, 
                 history['TP'], 
                 history['TN'], 
                 history['FP'], 
