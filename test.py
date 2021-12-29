@@ -1,6 +1,9 @@
 from config import Config
 from Debug import Debug
 from tensorflow.keras.models import load_model
+import tensorflow as tf
+from tensorflow.keras.preprocessing import image
+
 
 class test(object):
     def __init__(self, k: int, net_name: str = Config.name_vgg16):
