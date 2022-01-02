@@ -90,8 +90,8 @@ for i in tqdm(range(len(fake_image_filenames[fake_start_count:]))):
     img = io.imread(fake_image_filenames[fake_start_count:][i])
     segments = slic(img, 40, 10)
     color_dictionary = {}
-    for row in range(300):
-        for col in range(300):
+    for row in range(segments.shape[0]):
+        for col in range(segments.shape[1]):
             if segments[row][col] not in color_dictionary:
                 color_dictionary[segments[row][col]] = [(row, col)]
             else:
