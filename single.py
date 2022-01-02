@@ -59,17 +59,21 @@ def generate_train(self, batch_size: int = 32, target_size: (int, int) = (300, 3
         class_mode='binary')
     self.label = train_generator.class_indices  # {'fake': 0, 'real': 1}
     return train_generator
+# %%
+def is_image_file(filename):
+    return any(filename.endswith(extension) for extension in ['.png', '.jpg', '.jpeg', '.PNG', '.JPG', '.JPEG'])
 
-
-def get_image_file_list(pathe):
+def get_image_file_list(path):
     all_file = [i for i in os.listdir(path) if not i.startswith('.')]
     all_file.sort(key=lambda x: int(x[:-4]))  # 4代表去掉'.jpg'之类的后缀名
-    image_filenames = [os.path.join(path, x) for x in all_file if Config.is_image_file(x)]
+
+    image_filenames = [os.path.join(path, x) for x in all_file if is_image_file(x)]
     return image_filenames
 def path_exist(path):
     if not os.path.exists(path):
         os.makedirs(path)
     return path
+#%%
 # 获取验证集的图片合集
 path = './result/'
 slic_path = '../SLIC_result/60/validation/'
@@ -78,6 +82,7 @@ real_image_filenames = get_image_file_list(path + 'real/')
 fake_slic_path = slic_path + 'fake/'
 real_slic_path = slic_path + 'real/'
 
+# %%
 fake_start_count = math.ceil(0.8 * len(fake_image_filenames))  # fake起始
 real_start_count = math.ceil(0.8 * len(real_image_filenames))  # real起始
 print('正在运行图像处理：fake')
@@ -93,7 +98,7 @@ for i in tqdm(range(len(fake_image_filenames[fake_start_count:]))):
                 color_dictionary[segments[row][col]].append((row, col))
 
     for color in color_dictionary.keys():
-        path = Config.path_exist(slic_path + 'fake/') + "{}_{}.jpg".format(i, color)
+        path = path_exist(slic_path + 'fake/') + "{}_{}.jpg".format(i, color)
         data_copy = io.imread(fake_image_filenames[fake_start_count:][i])
         for row in range(self.image_height):
             for col in range(self.image_width):
@@ -116,7 +121,7 @@ for i in tqdm(range(len(real_image_filenames[real_start_count:]))):
                 color_dictionary[segments[row][col]].append((row, col))
 
     for color in color_dictionary.keys():
-        path = Config.path_exist(slic_path + 'real/') + "{}_{}.jpg".format(i, color)
+        path = path_exist(slic_path + 'real/') + "{}_{}.jpg".format(i, color)
         data_copy = io.imread(real_image_filenames[real_start_count:][i])
         for row in range(self.image_height):
             for col in range(self.image_width):
@@ -139,7 +144,7 @@ def generate_validation(self, batch_size: int = 32, target_size: (int, int) = (3
     self.label = train_generator.class_indices  # {'fake': 0, 'real': 1}
     return train_generator
 
-check = Config.path_exist('../checkpoint/60/xception/')
+check = path_exist('../checkpoint/60/xception/')
 checkpoint_path = check + '/cp-{epoch:04d}.ckpt'
 checkpoint_dir = os.path.dirname(checkpoint_path)
 
