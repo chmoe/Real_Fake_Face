@@ -1,3 +1,4 @@
+# %%
 import os
 from tensorflow.keras.preprocessing import image
 import numpy as np
@@ -11,7 +12,7 @@ from tensorflow.keras.applications.xception import Xception
 from tqdm import tqdm
 from tensorflow.keras.optimizers import SGD
 import math
-
+# %%
 shape = (300, 300, 3)
 
 def save_history(history, result_file):
@@ -90,7 +91,7 @@ fake_start_count = math.ceil(0.8 * len(fake_image_filenames))  # fake起始
 real_start_count = math.ceil(0.8 * len(real_image_filenames))  # real起始
 print('正在运行图像处理：fake')
 start_count = 0
-train_processeed_list = get_image_file_list('../SLIC_result/60/validation/fake/', True)
+train_processeed_list = get_image_file_list(path_exist('../SLIC_result/60/validation/fake/'), is_train_data=True)
 for i in tqdm(range(start_count, len(fake_image_filenames[fake_start_count:]))):
     img = io.imread(fake_image_filenames[fake_start_count:][i])
     segments = slic(img, 40, 10)
@@ -112,7 +113,7 @@ for i in tqdm(range(start_count, len(fake_image_filenames[fake_start_count:]))):
                 else:
                     data_copy[row][col] = (0, 0, 0)
         io.imsave(path, data_copy, check_contrast=False)
-
+# %%
 print('正在运行图像处理：real')
 start_count = 0
 train_processeed_list = get_image_file_list('../SLIC_result/60/validation/real/', True)
