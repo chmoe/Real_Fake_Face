@@ -10,6 +10,7 @@ from skimage import io, color
 from tensorflow.keras.applications.xception import Xception
 from tqdm import tqdm
 from tensorflow.keras.optimizers import SGD
+import math
 
 shape = (300, 300, 3)
 
