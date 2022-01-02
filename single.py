@@ -69,7 +69,7 @@ def get_image_file_list(path, is_train_data: bool = False):
     if not is_train_data:
         all_file.sort(key=lambda x: int(x[:-4]))  # 4代表去掉'.jpg'之类的后缀名
     else:
-        print(all_file)
+        print(all_file[0].split('_'))
         all_file.sort(key=lambda x: (int(x.split('_')[0]), int(x.split('_')[1][:-4])))
         
     image_filenames = [os.path.join(path, x) for x in all_file if is_image_file(x)]
