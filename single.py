@@ -69,7 +69,7 @@ def get_image_file_list(path, is_train_data: bool = False):
     if not is_train_data:
         all_file.sort(key=lambda x: int(x[:-4]))  # 4代表去掉'.jpg'之类的后缀名
     else:
-        print(all_file[0].split('_'))
+        # print(all_file[0].split('_'))
         all_file.sort(key=lambda x: (int(x.split('_')[0]), int(x.split('_')[1][:-4])))
         
     image_filenames = [os.path.join(path, x) for x in all_file if is_image_file(x)]
@@ -93,6 +93,8 @@ real_start_count = math.ceil(0.8 * len(real_image_filenames))  # real起始
 print('正在运行图像处理：fake')
 start_count = 0
 train_processeed_list = get_image_file_list(path_exist('../SLIC_result/60/validation/fake/'), is_train_data=True)
+if len(train_processeed_list) != 0:
+        start_count = int(train_processeed_list[-1].split('/')[-1].split('_')[0])
 for i in tqdm(range(start_count, len(fake_image_filenames[fake_start_count:]))):
     img = io.imread(fake_image_filenames[fake_start_count:][i])
     segments = slic(img, 40, 10)
@@ -118,6 +120,8 @@ for i in tqdm(range(start_count, len(fake_image_filenames[fake_start_count:]))):
 print('正在运行图像处理：real')
 start_count = 0
 train_processeed_list = get_image_file_list('../SLIC_result/60/validation/real/', True)
+if len(train_processeed_list) != 0:
+    start_count = int(train_processeed_list[-1].split('/')[-1].split('_')[0])
 for i in tqdm(range(start_count, len(real_image_filenames[real_start_count:]))):
     img = io.imread(real_image_filenames[real_start_count:][i])
     segments = slic(img, 40, 10)
