@@ -49,7 +49,7 @@ model.compile(
 
 
 # 训练集生成器
-def generate_train(self, batch_size: int = 32, target_size: (int, int) = (300, 300)):
+def generate_train(batch_size: int = 32, target_size: (int, int) = (300, 300)):
     head_data_path = '../SLIC_result/60/train/'
 
     train_datagen = image.ImageDataGenerator(rescale=1.0 / 255, shear_range=0.2, zoom_range=0.2, horizontal_flip=True)
@@ -58,7 +58,6 @@ def generate_train(self, batch_size: int = 32, target_size: (int, int) = (300, 3
         target_size=target_size,
         batch_size=batch_size,
         class_mode='binary')
-    self.label = train_generator.class_indices  # {'fake': 0, 'real': 1}
     return train_generator
 # %%
 def is_image_file(filename):
@@ -101,8 +100,8 @@ for i in tqdm(range(len(fake_image_filenames[fake_start_count:]))):
     for color in color_dictionary.keys():
         path = path_exist(slic_path + 'fake/') + "{}_{}.jpg".format(i, color)
         data_copy = io.imread(fake_image_filenames[fake_start_count:][i])
-        for row in range(self.image_height):
-            for col in range(self.image_width):
+        for row in range(300):
+            for col in range(300):
                 if (row, col) in color_dictionary[color]:
                     continue
                 else:
@@ -124,8 +123,8 @@ for i in tqdm(range(len(real_image_filenames[real_start_count:]))):
     for color in color_dictionary.keys():
         path = path_exist(slic_path + 'real/') + "{}_{}.jpg".format(i, color)
         data_copy = io.imread(real_image_filenames[real_start_count:][i])
-        for row in range(self.image_height):
-            for col in range(self.image_width):
+        for row in range(300):
+            for col in range(300):
                 if (row, col) in color_dictionary[color]:
                     continue
                 else:
@@ -133,7 +132,7 @@ for i in tqdm(range(len(real_image_filenames[real_start_count:]))):
         io.imsave(path, data_copy, check_contrast=False)
 
 # 生成验证集生成器
-def generate_validation(self, batch_size: int = 32, target_size: (int, int) = (300, 300)):
+def generate_validation(batch_size: int = 32, target_size: (int, int) = (300, 300)):
     head_data_path = '../SLIC_result/60/validation/'
 
     train_datagen = image.ImageDataGenerator(rescale=1.0 / 255)
@@ -142,7 +141,6 @@ def generate_validation(self, batch_size: int = 32, target_size: (int, int) = (3
         target_size=target_size,
         batch_size=batch_size,
         class_mode='binary')
-    self.label = train_generator.class_indices  # {'fake': 0, 'real': 1}
     return train_generator
 
 check = path_exist('../checkpoint/60/xception/')
@@ -187,7 +185,7 @@ if os.path.exists(check):
 
 model.fit_generator(
         generator=train,
-        epochs=self.nb_epoch,
+        epochs=32,
         # steps_per_epoch=nb_train_samples,
         validation_data=validation_generator,
         # validation_steps=nb_validation_samples,
