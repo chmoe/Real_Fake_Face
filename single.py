@@ -108,7 +108,7 @@ for i in tqdm(range(start_count, len(fake_image_filenames[fake_start_count:]))):
 
     for color in color_dictionary.keys():
         path = path_exist(slic_path + 'fake/') + "{}_{}.jpg".format(i, color)
-        data_copy = io.imread(fake_image_filenames[fake_start_count:][i])
+        data_copy = img
         for row in range(data_copy.shape[0]):
             for col in range(data_copy.shape[1]):
                 if (row, col) in color_dictionary[color]:
@@ -135,7 +135,7 @@ for i in tqdm(range(start_count, len(real_image_filenames[real_start_count:]))):
 
     for color in color_dictionary.keys():
         path = path_exist(slic_path + 'real/') + "{}_{}.jpg".format(i, color)
-        data_copy = io.imread(real_image_filenames[real_start_count:][i])
+        data_copy = img
         for row in range(data_copy.shape[0]):
             for col in range(data_copy.shape[1]):
                 if (row, col) in color_dictionary[color]:
@@ -200,7 +200,7 @@ model.fit_generator(
         generator=train,
         epochs=32,
         # steps_per_epoch=nb_train_samples,
-        validation_data=validation_generator,
+        validation_data=validation,
         # validation_steps=nb_validation_samples,
         callbacks=[
             cp_callback,
