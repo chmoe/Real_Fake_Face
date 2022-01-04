@@ -198,7 +198,7 @@ if os.path.exists(check):
 
 model.fit_generator(
         generator=train,
-        epochs=32,
+        epochs=200,
         # steps_per_epoch=nb_train_samples,
         validation_data=validation,
         # validation_steps=nb_validation_samples,
